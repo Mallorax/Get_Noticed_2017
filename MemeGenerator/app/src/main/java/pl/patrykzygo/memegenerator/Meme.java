@@ -5,6 +5,7 @@ public class Meme {
     private String name;
     private int imageResource;
 
+    //constructor
     public Meme(String name, int imageResource) {
         this.name = name;
         this.imageResource = imageResource;
