@@ -12,18 +12,17 @@ public class Meme {
     }
 
 
-    //getters
+    //getters and setters
     public String getName() {
         return name;
     }
 
-    public int getImageResource() {
-        return imageResource;
-    }
-
-    //setters
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getImageResource() {
+        return imageResource;
     }
 
     public void setImageResource(int imageResource) {

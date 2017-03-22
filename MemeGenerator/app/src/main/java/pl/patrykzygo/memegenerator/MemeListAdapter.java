@@ -10,45 +10,62 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MemeListAdapter extends RecyclerView.Adapter{
+//TODO: comment this code so it's somehow understandable
+
+public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHolder>{
 
     private List<Meme> memeList;
-
-    //ViewHolder class that provides a references to the views
-    private static class MemeHolder extends RecyclerView.ViewHolder{
-
-        private TextView memeNameTextView;
-        private ImageView memeImageView;
-
-        public MemeHolder(View view){
-            super(view);
-            memeNameTextView = (TextView) view.findViewById(R.id.meme_text_view);
-            memeImageView = (ImageView) view.findViewById(R.id.meme_list_image);
-        }
-    }
-
+    private OnEntryClickListener onEntryClickListener;
 
     public MemeListAdapter (List<Meme> memeList){
         this.memeList = memeList;
     }
 
+    public void setOnEntryClickListener(OnEntryClickListener onEntryClickListener){
+        this.onEntryClickListener = onEntryClickListener;
+    }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MemeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View memeView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.meme_list_item, parent, false);
         return new MemeHolder(memeView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    Meme meme = memeList.get(position);
-        ((MemeHolder) holder) .memeNameTextView.setText(meme.getName());
-        ((MemeHolder) holder) .memeImageView.setImageResource(meme.getImageResource());
+    public void onBindViewHolder(MemeHolder holder, int position) {
+        Meme meme = memeList.get(position);
+        holder.memeNameTextView.setText(meme.getName());
+        holder.memeImageView.setImageResource(meme.getImageResource());
     }
 
     @Override
     public int getItemCount() {
         return memeList.size();
+    }
+
+    public interface OnEntryClickListener{
+        void onEntryClick(View view, int position, List<Meme> memeList);
+    }
+
+    //ViewHolder class that provides a references to the views
+    public class MemeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        private TextView memeNameTextView;
+        private ImageView memeImageView;
+
+        public MemeHolder(View view){
+            super(view);
+            view.setOnClickListener(this);
+            memeNameTextView = (TextView) view.findViewById(R.id.meme_text_view);
+            memeImageView = (ImageView) view.findViewById(R.id.meme_list_image);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(onEntryClickListener != null){
+                onEntryClickListener.onEntryClick(v, getLayoutPosition(), memeList);
+            }
+        }
     }
 }
