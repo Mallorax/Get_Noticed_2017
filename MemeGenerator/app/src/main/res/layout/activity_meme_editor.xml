@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ImageView
+        android:id="@+id/editor_meme_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="170dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/meme_top_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editor_meme_view"
+        android:layout_alignRight="@+id/editor_meme_view"
+        android:layout_alignTop="@+id/editor_meme_view"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        tools:text="Top text" />
+
+    <TextView
+        android:id="@+id/meme_bottom_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editor_meme_view"
+        android:layout_alignLeft="@+id/editor_meme_view"
+        android:layout_alignRight="@+id/editor_meme_view"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        tools:text="Bottom text" />
+
+    <EditText
+        android:id="@+id/top_text_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Insert top text" />
+
+    <EditText
+        android:id="@+id/bottom_text_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/top_text_edit"
+        android:layout_below="@+id/top_text_edit"
+        android:layout_marginTop="38dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Insert bottom text" />
+
+    <Button
+        android:id="@+id/save_meme_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
+        android:text="Save" />
+
+
+</RelativeLayout>

@@ -1,9 +1,11 @@
 package pl.patrykzygo.memegenerator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView memeListRecyclerView;
-    private RecyclerView.LayoutManager memeListLayoutManager;
     private MemeListAdapter memeListAdapter;
 
 
@@ -23,11 +24,21 @@ public class MainActivity extends AppCompatActivity {
         memeListRecyclerView = (RecyclerView) findViewById(R.id.meme_list_recycler);
         memeListRecyclerView.setHasFixedSize(true);
 
-        memeListLayoutManager = new LinearLayoutManager(this);
-        memeListRecyclerView.setLayoutManager(memeListLayoutManager);
+        memeListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         memeListAdapter = new MemeListAdapter(getMemeList());
+        memeListAdapter.setOnEntryClickListener(new MemeListAdapter.OnEntryClickListener(){
+            @Override
+            public void onEntryClick(View view, int position, List<Meme> memeList) {
+                Meme meme = memeList.get(position);
+                Intent i = new Intent(view.getContext(), MemeEditorActivity.class);
+                i.putExtra("image", meme.getImageResource());
+                i.putExtra("name", meme.getName());
+                startActivity(i);
+            }
+        });
         memeListRecyclerView.setAdapter(memeListAdapter);
+
     }
 
     //temporary method that provides place holders to display our list
