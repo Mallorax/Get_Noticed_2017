@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MemeEditorActivity extends AppCompatActivity {
 
@@ -62,6 +64,14 @@ public class MemeEditorActivity extends AppCompatActivity {
                 @Override
                 public void afterTextChanged(Editable s) {
 
+                }
+            });
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(v.getContext(), "Does nothing yet", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             });
         }
