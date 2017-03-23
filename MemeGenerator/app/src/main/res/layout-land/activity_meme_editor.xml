@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/relativelayout"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:padding="@dimen/meme_editor_padding">
+
+        <ImageView
+            android:id="@+id/editor_meme_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:minHeight="170dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/meme_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editor_meme_view"
+            android:layout_alignRight="@+id/editor_meme_view"
+            android:layout_alignTop="@+id/editor_meme_view"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            tools:text="Top text" />
+
+        <TextView
+            android:id="@+id/meme_bottom_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editor_meme_view"
+            android:layout_alignLeft="@+id/editor_meme_view"
+            android:layout_alignRight="@+id/editor_meme_view"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            tools:text="Bottom text" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/meme_editor_padding">
+
+        <EditText
+            android:id="@+id/top_text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:hint="@string/insert_top_text"
+            android:inputType="text"
+            android:padding="@dimen/meme_editor_padding" />
+
+        <EditText
+            android:id="@+id/bottom_text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:hint="@string/insert_bottom_text"
+            android:inputType="text"
+            android:padding="@dimen/meme_editor_padding" />
+
+
+        <Button
+            android:id="@+id/save_meme_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:layout_marginBottom="32dp"
+            android:padding="@dimen/meme_editor_padding"
+            android:text="@string/save" />
+
+    </LinearLayout>
+
+</LinearLayout>
