@@ -41,8 +41,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:ems="10"
-        android:inputType="text"
-        android:text="Insert top text" />
+        android:hint="@string/insert_top_text"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/bottom_text_edit"
@@ -52,8 +52,8 @@
         android:layout_below="@+id/top_text_edit"
         android:layout_marginTop="38dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="Insert bottom text" />
+        android:hint="@string/insert_bottom_text"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/save_meme_button"
@@ -62,7 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="46dp"
-        android:text="Save" />
+        android:text="@string/save" />
 
 
 </RelativeLayout>

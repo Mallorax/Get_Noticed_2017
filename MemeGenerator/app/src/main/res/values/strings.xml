@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Meme Generator</string>
+    <string name="insert_top_text">Insert top text</string>
+    <string name="insert_bottom_text">Insert bottom text</string>
+    <string name="save">Save</string>
 </resources>
