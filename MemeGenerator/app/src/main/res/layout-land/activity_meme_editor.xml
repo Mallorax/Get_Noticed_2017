@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:id="@+id/relativelayout"
+        android:id="@+id/editor_meme_layout"
         android:layout_width="252dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
