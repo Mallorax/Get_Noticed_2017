@@ -1,11 +1,9 @@
 package pl.patrykzygo.memegenerator;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +25,6 @@ public class MainActivity extends AppCompatActivity {
         memeListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         memeListAdapter = new MemeListAdapter(getMemeList());
-        memeListAdapter.setOnEntryClickListener(new MemeListAdapter.OnEntryClickListener(){
-            @Override
-            public void onEntryClick(View view, int position, List<Meme> memeList) {
-                Meme meme = memeList.get(position);
-                Intent i = new Intent(view.getContext(), MemeEditorActivity.class);
-                i.putExtra("image", meme.getImageResource());
-                i.putExtra("name", meme.getName());
-                startActivity(i);
-            }
-        });
         memeListRecyclerView.setAdapter(memeListAdapter);
 
     }
