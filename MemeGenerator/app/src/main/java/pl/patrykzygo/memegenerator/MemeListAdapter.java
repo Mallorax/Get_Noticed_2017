@@ -10,18 +10,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
-//TODO: comment this code so it's somehow understandable
 
-public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHolder>{
+public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHolder> {
 
     private List<Meme> memeList;
     private OnEntryClickListener onEntryClickListener;
 
-    public MemeListAdapter (List<Meme> memeList){
+    public MemeListAdapter(List<Meme> memeList) {
         this.memeList = memeList;
     }
 
-    public void setOnEntryClickListener(OnEntryClickListener onEntryClickListener){
+    //setter for our listener
+    public void setOnEntryClickListener(OnEntryClickListener onEntryClickListener) {
         this.onEntryClickListener = onEntryClickListener;
     }
 
@@ -44,27 +44,31 @@ public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHo
         return memeList.size();
     }
 
-    public interface OnEntryClickListener{
-        void onEntryClick(View view, int position, List<Meme> memeList);
+    //interface with a method that class must implement if it wants to define action that occur when list item is clicked
+    public interface OnEntryClickListener {
+        void onEntryClick(View view, Meme memeClicked);
     }
 
     //ViewHolder class that provides a references to the views
-    public class MemeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    //It implements OnClickListener, so RecyclerView will not only be able to display list
+    public class MemeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView memeNameTextView;
         private ImageView memeImageView;
 
-        public MemeHolder(View view){
+
+        public MemeHolder(View view) {
             super(view);
             view.setOnClickListener(this);
             memeNameTextView = (TextView) view.findViewById(R.id.meme_text_view);
             memeImageView = (ImageView) view.findViewById(R.id.meme_list_image);
         }
 
+        //onClick method uses a method of inner interface making possible to implement specific action inside class that uses adapter
         @Override
         public void onClick(View v) {
-            if(onEntryClickListener != null){
-                onEntryClickListener.onEntryClick(v, getLayoutPosition(), memeList);
+            if (onEntryClickListener != null) {
+                onEntryClickListener.onEntryClick(v, memeList.get(getLayoutPosition()));
             }
         }
     }

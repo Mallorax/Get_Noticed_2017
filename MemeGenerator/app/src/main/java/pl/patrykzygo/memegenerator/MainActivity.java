@@ -29,11 +29,9 @@ public class MainActivity extends AppCompatActivity {
         memeListAdapter = new MemeListAdapter(getMemeList());
         memeListAdapter.setOnEntryClickListener(new MemeListAdapter.OnEntryClickListener(){
             @Override
-            public void onEntryClick(View view, int position, List<Meme> memeList) {
-                Meme meme = memeList.get(position);
+            public void onEntryClick(View view, Meme memeClicked) {
                 Intent i = new Intent(view.getContext(), MemeEditorActivity.class);
-                i.putExtra("image", meme.getImageResource());
-                i.putExtra("name", meme.getName());
+                i.putExtra("image", memeClicked.getImageResource());
                 startActivity(i);
             }
         });
