@@ -29,7 +29,8 @@
             android:layout_alignRight="@+id/editor_meme_view"
             android:layout_alignTop="@+id/editor_meme_view"
             android:gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
             tools:text="Top text" />
 
         <TextView
@@ -40,7 +41,8 @@
             android:layout_alignLeft="@+id/editor_meme_view"
             android:layout_alignRight="@+id/editor_meme_view"
             android:gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
             tools:text="Bottom text" />
 
 
