@@ -23,7 +23,6 @@ public class MemeEditorActivity extends AppCompatActivity {
     private EditText topEditText, bottomEditText;
     private Button saveButton;
     private RelativeLayout memeLayout;
-    private PermisionHandler permisionHandler;
     private AbstractImageHandler imageHandler;
 
     @Override
@@ -38,7 +37,6 @@ public class MemeEditorActivity extends AppCompatActivity {
         bottomEditText = (EditText) findViewById(R.id.bottom_text_edit);
         saveButton = (Button) findViewById(R.id.save_meme_button);
         memeLayout = (RelativeLayout) findViewById(R.id.editor_meme_layout);
-        permisionHandler = new PermisionHandler(this);
 
         Intent i = getIntent();
         Bundle b = i.getExtras();
