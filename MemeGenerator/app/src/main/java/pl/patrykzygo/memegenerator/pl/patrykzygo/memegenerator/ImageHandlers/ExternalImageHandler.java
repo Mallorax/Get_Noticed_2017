@@ -61,6 +61,4 @@ public class ExternalImageHandler extends AbstractImageHandler {
         }
         return false;
     }
-
-
 }
