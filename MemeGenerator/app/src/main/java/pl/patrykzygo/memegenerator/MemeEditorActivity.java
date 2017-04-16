@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import pl.patrykzygo.memegenerator.pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageHandler;
-import pl.patrykzygo.memegenerator.pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageHandler;
+import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageHandler;
+import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageHandler;
 
 public class MemeEditorActivity extends AppCompatActivity {
 
