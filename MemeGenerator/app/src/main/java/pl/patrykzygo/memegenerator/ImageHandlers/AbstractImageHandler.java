@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator.pl.patrykzygo.memegenerator.ImageHandlers;
+package pl.patrykzygo.memegenerator.ImageHandlers;
 
 
 import android.app.Activity;
