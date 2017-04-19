@@ -1,8 +1,8 @@
 package pl.patrykzygo.memegenerator;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -13,10 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
+import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
+import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageHandler;
 import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageHandler;
 
-public class MemeEditorActivity extends AppCompatActivity {
+public class MemeEditorActivity extends ActivityManagePermission {
 
     private ImageView memeImage;
     private TextView topTextView, bottomTextView;
@@ -24,9 +27,6 @@ public class MemeEditorActivity extends AppCompatActivity {
     private Button saveButton;
     private RelativeLayout memeLayout;
     private AbstractImageHandler imageHandler;
-
-    private PermisionHandler permisionHandler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +83,36 @@ public class MemeEditorActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
-                    if (imageHandler.saveMeme(AbstractImageHandler.getBitmapFromView(memeLayout))){
-                        Toast.makeText(MemeEditorActivity.this, "Image has been saved to your exzternal storage", Toast.LENGTH_LONG).show();
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        askCompactPermission(PermissionUtils.Manifest_WRITE_EXTERNAL_STORAGE, new PermissionResult() {
+
+                            @Override
+                            public void permissionGranted() {
+                                imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
+                                if (imageHandler.saveMeme(ExternalImageHandler.getBitmapFromView(memeLayout))) {
+                                    Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(MemeEditorActivity.this, "Meme hasn't been saved", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void permissionDenied() {
+                                Toast.makeText(MemeEditorActivity.this, "Access denied. Can't save.", Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void permissionForeverDenied() {
+                                Toast.makeText(MemeEditorActivity.this, "Access denied. Can't save.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }else{
+                        imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
+                        if (imageHandler.saveMeme(ExternalImageHandler.getBitmapFromView(memeLayout))) {
+                            Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MemeEditorActivity.this, "Meme hasn't been saved", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });
