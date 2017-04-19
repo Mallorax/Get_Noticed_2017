@@ -1,7 +1,6 @@
 package pl.patrykzygo.memegenerator.ImageHandlers;
 
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
@@ -11,9 +10,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
+
 public class ExternalImageHandler extends AbstractImageHandler {
 
-    public ExternalImageHandler(Activity activity) {
+    public ExternalImageHandler(ActivityManagePermission activity) {
         super(activity);
     }
 

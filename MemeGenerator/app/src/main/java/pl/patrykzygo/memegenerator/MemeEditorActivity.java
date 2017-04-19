@@ -88,36 +88,44 @@ public class MemeEditorActivity extends ActivityManagePermission {
 
                             @Override
                             public void permissionGranted() {
-                                imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
-                                if (imageHandler.saveMeme(ExternalImageHandler.getBitmapFromView(memeLayout))) {
-                                    Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(MemeEditorActivity.this, "Meme hasn't been saved", Toast.LENGTH_LONG).show();
-                                }
+                                onPermissionGranted();
                             }
 
                             @Override
                             public void permissionDenied() {
-                                Toast.makeText(MemeEditorActivity.this, "Access denied. Can't save.", Toast.LENGTH_LONG).show();
+                                onPermissionDenied();
                             }
 
                             @Override
                             public void permissionForeverDenied() {
-                                Toast.makeText(MemeEditorActivity.this, "Access denied. Can't save.", Toast.LENGTH_LONG).show();
+                                onPermissionDenied();
                             }
                         });
-                    }else{
-                        imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
-                        if (imageHandler.saveMeme(ExternalImageHandler.getBitmapFromView(memeLayout))) {
-                            Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(MemeEditorActivity.this, "Meme hasn't been saved", Toast.LENGTH_LONG).show();
-                        }
+                    } else {
+                        onPermissionGranted();
                     }
                 }
             });
         }
+
+
     }
 
+    public void onPermissionGranted() {
+        imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
+        if (imageHandler.saveMeme(ExternalImageHandler.getBitmapFromView(memeLayout))) {
+            Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
+            imageHandler = null;
+        } else {
+            //TODO create save to internal storage funcionality
+            Toast.makeText(MemeEditorActivity.this, "Meme hasn't been saved", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void onPermissionDenied(){
+        //TODO create save to internal storage funcionality
+        Toast.makeText(MemeEditorActivity.this, "Access denied. Can't save.", Toast.LENGTH_LONG).show();
+    }
 
 }
