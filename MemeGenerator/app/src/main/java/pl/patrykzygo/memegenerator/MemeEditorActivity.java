@@ -17,7 +17,7 @@ import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageHandler;
-import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageHandler;
+import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageHandler;
 
 public class MemeEditorActivity extends ActivityManagePermission {
 
@@ -112,9 +112,9 @@ public class MemeEditorActivity extends ActivityManagePermission {
     }
 
     public void onPermissionGranted() {
-        imageHandler = new ExternalImageHandler(MemeEditorActivity.this);
-        if (imageHandler.saveMeme(ExternalImageHandler.getBitmapFromView(memeLayout))) {
-            Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
+        imageHandler = new InternalImageHandler(MemeEditorActivity.this);
+        if (imageHandler.saveMeme(AbstractImageHandler.getBitmapFromView(memeLayout))) {
+            Toast.makeText(MemeEditorActivity.this, "Meme has been saved to internal storage", Toast.LENGTH_LONG).show();
             imageHandler = null;
         } else {
             //TODO create save to internal storage funcionality
