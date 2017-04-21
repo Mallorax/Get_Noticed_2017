@@ -44,6 +44,7 @@ public abstract class AbstractImageHandler {
         Log.v(IMAGE_LOG, "Gallery scanned");
     }
 
+
     protected Activity getActivity() {
         return activity;
     }

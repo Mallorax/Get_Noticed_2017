@@ -29,7 +29,7 @@ public class InternalImageHandler extends AbstractImageHandler {
         FileOutputStream foStream;
         try {
             foStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, foStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, foStream);
             foStream.close();
             Log.v(IMAGE_LOG, "Saved successfuly");
             return file.exists();
