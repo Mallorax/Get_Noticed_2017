@@ -114,7 +114,7 @@ public class MemeEditorActivity extends ActivityManagePermission {
     public void onPermissionGranted() {
         imageHandler = new InternalImageHandler(MemeEditorActivity.this);
         if (imageHandler.saveMeme(AbstractImageHandler.getBitmapFromView(memeLayout))) {
-            Toast.makeText(MemeEditorActivity.this, "Meme has been saved to internal storage", Toast.LENGTH_LONG).show();
+            Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
             imageHandler = null;
         } else {
             //TODO create save to internal storage funcionality
