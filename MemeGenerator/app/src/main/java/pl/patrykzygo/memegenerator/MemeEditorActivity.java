@@ -16,17 +16,18 @@ import android.widget.Toast;
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
-import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageHandler;
-import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageHandler;
+import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageSaver;
 
 public class MemeEditorActivity extends ActivityManagePermission {
 
     private ImageView memeImage;
     private TextView topTextView, bottomTextView;
     private EditText topEditText, bottomEditText;
-    private Button saveButton;
+    private Button saveButton, shareButton;
     private RelativeLayout memeLayout;
-    private AbstractImageHandler imageHandler;
+    private AbstractImageSaver imageHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,20 +113,22 @@ public class MemeEditorActivity extends ActivityManagePermission {
     }
 
     public void onPermissionGranted() {
-        imageHandler = new InternalImageHandler(MemeEditorActivity.this);
-        if (imageHandler.saveMeme(AbstractImageHandler.getBitmapFromView(memeLayout))) {
+        imageHandler = new ExternalImageSaver(MemeEditorActivity.this);
+        if (imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout))) {
             Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
             imageHandler = null;
         } else {
-            //TODO create save to internal storage funcionality
-            Toast.makeText(MemeEditorActivity.this, "Meme hasn't been saved", Toast.LENGTH_LONG).show();
+            imageHandler = new InternalImageSaver(MemeEditorActivity.this);
+            imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
+            imageHandler = null;
         }
 
     }
 
     public void onPermissionDenied(){
-        //TODO create save to internal storage funcionality
-        Toast.makeText(MemeEditorActivity.this, "Access denied. Can't save.", Toast.LENGTH_LONG).show();
+        imageHandler = new InternalImageSaver(MemeEditorActivity.this);
+        imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
+        imageHandler = null;
     }
 
 }

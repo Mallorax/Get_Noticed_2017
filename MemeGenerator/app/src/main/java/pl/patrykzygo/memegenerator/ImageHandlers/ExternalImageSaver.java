@@ -2,6 +2,8 @@ package pl.patrykzygo.memegenerator.ImageHandlers;
 
 
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -12,9 +14,9 @@ import java.util.Random;
 
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 
-public class ExternalImageHandler extends AbstractImageHandler {
+public class ExternalImageSaver extends AbstractImageSaver {
 
-    public ExternalImageHandler(ActivityManagePermission activity) {
+    public ExternalImageSaver(ActivityManagePermission activity) {
         super(activity);
     }
 
@@ -26,19 +28,18 @@ public class ExternalImageHandler extends AbstractImageHandler {
         n = generator.nextInt(n);
         String fileName = "Image-" + n + ".jpg";
 
-        File myDir = new File(root + "/saved_images");
+        File myDir = new File(root + "/Memes");
         myDir.mkdirs();
         File file = new File(myDir, fileName);
+        Uri contentUri = Uri.fromFile(file);
 
-        if (file.exists())
-            file.delete();
-
+        FileOutputStream out;
         try {
-            FileOutputStream out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
             scanGallery(file);
+            sharer.sendToGallery(contentUri, this);
             Log.v(IMAGE_LOG, "Image saved to external storage");
             return true;
         } catch (IOException e) {
@@ -48,20 +49,19 @@ public class ExternalImageHandler extends AbstractImageHandler {
         }
     }
 
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+    protected void scanGallery(File file){
+        MediaScannerConnection.scanFile(getActivity(), new String[]{file.toString()}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i(IMAGE_LOG, "Scanned " + path + ":");
+                        Log.i(IMAGE_LOG, "-> uri=" + uri);
+                    }
+                });
+        Log.v(IMAGE_LOG, "Gallery scanned");
     }
 
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
+    @Override
+    public void run() {
+
     }
 }

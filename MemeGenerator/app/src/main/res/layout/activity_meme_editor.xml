@@ -32,7 +32,7 @@
             android:layout_alignTop="@+id/editor_meme_view"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             tools:text="Top text" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_alignRight="@+id/editor_meme_view"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             tools:text="Bottom text" />
 
 
@@ -66,12 +66,29 @@
         android:hint="@string/insert_bottom_text"
         android:inputType="text" />
 
-    <Button
-        android:id="@+id/save_meme_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/meme_editor_margin"
-        android:text="@string/save" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/save_meme_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:layout_weight="1"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/share_meme_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:layout_weight="1"
+            android:text="Share" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

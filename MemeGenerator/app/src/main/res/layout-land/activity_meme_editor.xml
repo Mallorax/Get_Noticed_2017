@@ -84,6 +84,12 @@
             android:padding="@dimen/meme_editor_padding"
             android:text="@string/save" />
 
+        <Button
+            android:id="@+id/share_meme_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share" />
+
     </LinearLayout>
 
 </LinearLayout>

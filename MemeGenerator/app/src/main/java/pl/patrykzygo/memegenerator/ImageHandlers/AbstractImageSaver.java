@@ -4,20 +4,18 @@ package pl.patrykzygo.memegenerator.ImageHandlers;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
-import java.io.File;
-
-public abstract class AbstractImageHandler {
+public abstract class AbstractImageSaver implements Runnable {
 
     public static final String IMAGE_LOG = "IMAGE_MANAGER";
     private Activity activity;
+    protected ImageSharer sharer;
 
-    public AbstractImageHandler(Activity activity) {
+    public AbstractImageSaver(Activity activity) {
         this.activity = activity;
+        sharer = new ImageSharer(activity);
     }
 
     //Method for converting view into bitmap. Returns bitmap.
@@ -33,16 +31,7 @@ public abstract class AbstractImageHandler {
     public abstract boolean saveMeme(Bitmap bitmap);
 
     //Method for scanning gallery. It's necessary if you want to show image in gallery.
-    protected void scanGallery(File file){
-        MediaScannerConnection.scanFile(activity, new String[]{file.toString()}, null,
-                new MediaScannerConnection.OnScanCompletedListener() {
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i(IMAGE_LOG, "Scanned " + path + ":");
-                        Log.i(IMAGE_LOG, "-> uri=" + uri);
-                    }
-                });
-        Log.v(IMAGE_LOG, "Gallery scanned");
-    }
+
 
 
     protected Activity getActivity() {
