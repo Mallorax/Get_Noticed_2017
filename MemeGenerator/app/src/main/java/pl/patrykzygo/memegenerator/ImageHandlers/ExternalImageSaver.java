@@ -1,6 +1,7 @@
 package pl.patrykzygo.memegenerator.ImageHandlers;
 
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -12,16 +13,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
-
 public class ExternalImageSaver extends AbstractImageSaver {
 
-    public ExternalImageSaver(ActivityManagePermission activity) {
+    public ExternalImageSaver(Activity activity) {
         super(activity);
     }
 
     @Override
-    public boolean saveMeme(Bitmap bitmap) {
+    public Uri saveMeme(Bitmap bitmap) {
         String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         Random generator = new Random();
         int n = 10000;
@@ -39,17 +38,16 @@ public class ExternalImageSaver extends AbstractImageSaver {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
             scanGallery(file);
-            sharer.sendToGallery(contentUri, this);
             Log.v(IMAGE_LOG, "Image saved to external storage");
-            return true;
+            return contentUri;
         } catch (IOException e) {
             e.printStackTrace();
             Log.v(IMAGE_LOG, "IOException occurred");
-            return false;
+            return null;
         }
     }
 
-    protected void scanGallery(File file){
+    private void scanGallery(File file){
         MediaScannerConnection.scanFile(getActivity(), new String[]{file.toString()}, null,
                 new MediaScannerConnection.OnScanCompletedListener() {
                     public void onScanCompleted(String path, Uri uri) {
@@ -58,10 +56,5 @@ public class ExternalImageSaver extends AbstractImageSaver {
                     }
                 });
         Log.v(IMAGE_LOG, "Gallery scanned");
-    }
-
-    @Override
-    public void run() {
-
     }
 }

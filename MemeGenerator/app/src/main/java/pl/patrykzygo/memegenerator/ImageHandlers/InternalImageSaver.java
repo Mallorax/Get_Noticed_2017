@@ -18,15 +18,12 @@ public class InternalImageSaver extends AbstractImageSaver {
         super(activity);
     }
 
-
     @Override
-    public boolean saveMeme(Bitmap bitmap) {
-        sharer = new ImageSharer(getActivity());
+    public Uri saveMeme(Bitmap bitmap) {
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
         String fileName = "Image-" + n + ".jpg";
-
 
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         File cat = new File(cw.getFilesDir(), "Memes");
@@ -39,17 +36,11 @@ public class InternalImageSaver extends AbstractImageSaver {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
             Log.v(IMAGE_LOG, "Saved successfuly");
-            sharer.sendToGallery(contentUri, this);
-            return true;
+            return contentUri;
         } catch (Exception e) {
             Log.v(IMAGE_LOG, "Something went wrong!");
             e.printStackTrace();
-            return false;
+            return null;
         }
-    }
-
-    @Override
-    public void run() {
-
     }
 }

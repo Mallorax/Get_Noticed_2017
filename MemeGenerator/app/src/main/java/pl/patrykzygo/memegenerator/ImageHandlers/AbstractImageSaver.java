@@ -4,18 +4,19 @@ package pl.patrykzygo.memegenerator.ImageHandlers;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
-public abstract class AbstractImageSaver implements Runnable {
+public abstract class AbstractImageSaver {
 
     public static final String IMAGE_LOG = "IMAGE_MANAGER";
     private Activity activity;
-    protected ImageSharer sharer;
+    private Uri bitmapUri;
 
     public AbstractImageSaver(Activity activity) {
         this.activity = activity;
-        sharer = new ImageSharer(activity);
+
     }
 
     //Method for converting view into bitmap. Returns bitmap.
@@ -27,14 +28,12 @@ public abstract class AbstractImageSaver implements Runnable {
         return bitmap;
     }
 
-    //Method for saving meme. Should return true if meme was saved successfully.
-    public abstract boolean saveMeme(Bitmap bitmap);
-
-    //Method for scanning gallery. It's necessary if you want to show image in gallery.
-
+    //Method for saving meme. Should return meme's Uri or null if wasn't saved successfully
+    public abstract Uri saveMeme(Bitmap bitmap);
 
 
     protected Activity getActivity() {
         return activity;
     }
+
 }
