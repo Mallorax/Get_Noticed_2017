@@ -11,13 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
-import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
 import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.ImageTask;
 import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageSaver;
 
 public class MemeEditorActivity extends ActivityManagePermission {
@@ -27,7 +26,6 @@ public class MemeEditorActivity extends ActivityManagePermission {
     private EditText topEditText, bottomEditText;
     private Button saveButton, shareButton;
     private RelativeLayout memeLayout;
-    private AbstractImageSaver imageHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +39,7 @@ public class MemeEditorActivity extends ActivityManagePermission {
         bottomEditText = (EditText) findViewById(R.id.bottom_text_edit);
         saveButton = (Button) findViewById(R.id.save_meme_button);
         memeLayout = (RelativeLayout) findViewById(R.id.editor_meme_layout);
+        shareButton = (Button) findViewById(R.id.share_meme_button);
 
 
         Intent i = getIntent();
@@ -84,27 +83,15 @@ public class MemeEditorActivity extends ActivityManagePermission {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Build.VERSION.SDK_INT >= 23) {
-                        askCompactPermission(PermissionUtils.Manifest_WRITE_EXTERNAL_STORAGE, new PermissionResult() {
+                    saveButtonClicked(v);
+                }
+            });
 
-                            @Override
-                            public void permissionGranted() {
-                                onPermissionGranted();
-                            }
-
-                            @Override
-                            public void permissionDenied() {
-                                onPermissionDenied();
-                            }
-
-                            @Override
-                            public void permissionForeverDenied() {
-                                onPermissionDenied();
-                            }
-                        });
-                    } else {
-                        onPermissionGranted();
-                    }
+            shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InternalImageSaver imageSaver = new InternalImageSaver(MemeEditorActivity.this);
+                    new ImageTask(imageSaver, memeLayout, v).execute();
                 }
             });
         }
@@ -112,23 +99,38 @@ public class MemeEditorActivity extends ActivityManagePermission {
 
     }
 
-    public void onPermissionGranted() {
-        imageHandler = new ExternalImageSaver(MemeEditorActivity.this);
-        if (imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout))) {
-            Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
-            imageHandler = null;
-        } else {
-            imageHandler = new InternalImageSaver(MemeEditorActivity.this);
-            imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
-            imageHandler = null;
-        }
 
+    public void saveButtonClicked(View v){
+        final View caller = v;
+        if (Build.VERSION.SDK_INT >= 23) {
+            askCompactPermission(PermissionUtils.Manifest_WRITE_EXTERNAL_STORAGE, new PermissionResult() {
+
+                @Override
+                public void permissionGranted() {
+                    onPermissionGranted(caller);
+                }
+
+                @Override
+                public void permissionDenied() {
+                    onPermissionDenied(caller);
+                }
+
+                @Override
+                public void permissionForeverDenied() {
+                    onPermissionDenied(caller);
+                }
+            });
+        } else {
+            onPermissionGranted(caller);
+        }
     }
 
-    public void onPermissionDenied(){
-        imageHandler = new InternalImageSaver(MemeEditorActivity.this);
-        imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
-        imageHandler = null;
+    public void onPermissionGranted(View caller) {
+        new ImageTask(new ExternalImageSaver(this), memeLayout, caller).execute();
+    }
+
+    public void onPermissionDenied(View caller){
+        new ImageTask(new InternalImageSaver(this), memeLayout, caller).execute();
     }
 
 }
