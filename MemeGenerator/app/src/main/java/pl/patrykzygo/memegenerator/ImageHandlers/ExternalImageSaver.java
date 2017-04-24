@@ -21,7 +21,7 @@ public class ExternalImageSaver extends AbstractImageSaver {
 
     @Override
     public Uri saveMeme(Bitmap bitmap) {
-        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        String root = Environment.getExternalStorageDirectory().toString();
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
