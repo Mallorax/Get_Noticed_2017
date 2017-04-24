@@ -17,10 +17,10 @@ import android.widget.Toast;
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
-import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
-import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageSaver;
-import pl.patrykzygo.memegenerator.ImageHandlers.ImageSharer;
-import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageSavers.AbstractImageSaver;
+import pl.patrykzygo.memegenerator.ImageSavers.ExternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageSavers.ImageSharer;
+import pl.patrykzygo.memegenerator.ImageSavers.InternalImageSaver;
 
 public class MemeEditorActivity extends ActivityManagePermission {
 
@@ -29,7 +29,7 @@ public class MemeEditorActivity extends ActivityManagePermission {
     private EditText topEditText, bottomEditText;
     private Button saveButton, shareButton;
     private RelativeLayout memeLayout;
-    private AbstractImageSaver imageHandler;
+    private AbstractImageSaver imageSaver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class MemeEditorActivity extends ActivityManagePermission {
             shareButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-
+                    onShareButtonClicked();
                 }
             });
         }
@@ -122,28 +122,35 @@ public class MemeEditorActivity extends ActivityManagePermission {
     }
 
     public void onPermissionGranted() {
-        imageHandler = new ExternalImageSaver(MemeEditorActivity.this);
-        Uri uri = null;
+        imageSaver = new ExternalImageSaver(this);
+        Uri uri;
         ImageSharer sharer = new ImageSharer(this);
-        if ((uri = imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout))) != null) {
+        if ((uri = imageSaver.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout))) != null) {
             Toast.makeText(MemeEditorActivity.this, "Meme has been saved", Toast.LENGTH_LONG).show();
-            sharer.sendToGallery(uri, imageHandler);
-            imageHandler = null;
+            sharer.sendToGallery(uri, imageSaver);
+            imageSaver = null;
         } else {
-            imageHandler = new InternalImageSaver(MemeEditorActivity.this);
-            uri = imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
-            sharer.sendToGallery(uri, imageHandler);
-            imageHandler = null;
+            imageSaver = new InternalImageSaver(MemeEditorActivity.this);
+            uri = imageSaver.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
+            sharer.sendToGallery(uri, imageSaver);
+            imageSaver = null;
         }
 
     }
 
     public void onPermissionDenied(){
         ImageSharer sharer = new ImageSharer(this);
-        imageHandler = new InternalImageSaver(MemeEditorActivity.this);
-        Uri uri = imageHandler.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
-        sharer.sendToGallery(uri, imageHandler);
-        imageHandler = null;
+        imageSaver = new InternalImageSaver(MemeEditorActivity.this);
+        Uri uri = imageSaver.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
+        sharer.sendToGallery(uri, imageSaver);
+        imageSaver = null;
+    }
+
+    private void onShareButtonClicked(){
+        imageSaver = new InternalImageSaver(this);
+        ImageSharer sharer = new ImageSharer(this);
+        Uri uri = imageSaver.saveMeme(AbstractImageSaver.getBitmapFromView(memeLayout));
+        sharer.shareWithOtherApps(uri);
     }
 
 }

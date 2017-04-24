@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator.ImageHandlers;
+package pl.patrykzygo.memegenerator.ImageSavers;
 
 
 import android.app.Activity;
@@ -21,7 +21,7 @@ public class ExternalImageSaver extends AbstractImageSaver {
 
     @Override
     public Uri saveMeme(Bitmap bitmap) {
-        String root = Environment.getExternalStorageDirectory().toString();
+        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
