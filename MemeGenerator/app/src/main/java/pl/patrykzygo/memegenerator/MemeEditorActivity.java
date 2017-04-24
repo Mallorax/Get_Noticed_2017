@@ -17,10 +17,10 @@ import android.widget.Toast;
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
-import pl.patrykzygo.memegenerator.ImageSavers.AbstractImageSaver;
-import pl.patrykzygo.memegenerator.ImageSavers.ExternalImageSaver;
-import pl.patrykzygo.memegenerator.ImageSavers.ImageSharer;
-import pl.patrykzygo.memegenerator.ImageSavers.InternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.ImageSharer;
+import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageSaver;
 
 public class MemeEditorActivity extends ActivityManagePermission {
 
