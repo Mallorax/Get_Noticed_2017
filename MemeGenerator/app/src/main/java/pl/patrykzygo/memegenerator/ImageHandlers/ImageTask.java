@@ -11,16 +11,15 @@ import pl.patrykzygo.memegenerator.R;
 public class ImageTask extends AsyncTask<Void, Void, Void> {
 
     private AbstractImageSaver saver;
-    private ImageSharer sharer;
     private Uri uri;
-    private View view, caller;
+    private View meme, caller;
     private Activity activity;
     private ProgressDialog progress;
 
 
     public ImageTask(AbstractImageSaver saver, View viewToSave, View caller) {
         this.saver = saver;
-        this.view = viewToSave;
+        this.meme = viewToSave;
         this.caller = caller;
         this.activity = saver.getActivity();
         this.progress = new ProgressDialog(activity);
@@ -39,13 +38,13 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        this.uri = saver.saveMeme(AbstractImageSaver.getBitmapFromView(view));
+        this.uri = saver.saveMeme(AbstractImageSaver.getBitmapFromView(meme));
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        sharer = new ImageSharer(activity);
+        ImageSharer sharer = new ImageSharer(activity);
         if (caller.getId() == R.id.save_meme_button) {
             progress.dismiss();
             sharer.sendToGallery(uri, saver);

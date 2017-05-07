@@ -10,9 +10,8 @@ import android.view.View;
 
 public abstract class AbstractImageSaver {
 
-    public static final String IMAGE_LOG = "IMAGE_MANAGER";
+    public static final String IMAGE_LOG = "IMAGE_SAVER";
     private Activity activity;
-    private Uri bitmapUri;
 
     public AbstractImageSaver(Activity activity) {
         this.activity = activity;
@@ -20,7 +19,7 @@ public abstract class AbstractImageSaver {
     }
 
     //Method for converting view into bitmap. Returns bitmap.
-    public static Bitmap getBitmapFromView(View view){
+    public static Bitmap getBitmapFromView(View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
@@ -32,7 +31,7 @@ public abstract class AbstractImageSaver {
     public abstract Uri saveMeme(Bitmap bitmap);
 
 
-    protected Activity getActivity() {
+    public Activity getActivity() {
         return activity;
     }
 

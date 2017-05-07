@@ -21,18 +21,21 @@ public class ExternalImageSaver extends AbstractImageSaver {
 
     @Override
     public Uri saveMeme(Bitmap bitmap) {
+        //generate file name and get root directory
         String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
         String fileName = "Image-" + n + ".jpg";
 
+        //create directories
         File myDir = new File(root + "/Memes");
         myDir.mkdirs();
         File file = new File(myDir, fileName);
         Uri contentUri = Uri.fromFile(file);
 
         FileOutputStream out;
+        //save operations
         try {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
@@ -47,7 +50,7 @@ public class ExternalImageSaver extends AbstractImageSaver {
         }
     }
 
-    private void scanGallery(File file){
+    private void scanGallery(File file) {
         MediaScannerConnection.scanFile(getActivity(), new String[]{file.toString()}, null,
                 new MediaScannerConnection.OnScanCompletedListener() {
                     public void onScanCompleted(String path, Uri uri) {
