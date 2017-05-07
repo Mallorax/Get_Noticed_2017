@@ -27,6 +27,7 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
+        //displays different texts based on caller
         if (caller.getId() == R.id.save_meme_button) {
             progress.setMessage("Saving...");
             progress.show();
@@ -38,12 +39,14 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
+        //save operation performed in another thread
         this.uri = saver.saveMeme(AbstractImageSaver.getBitmapFromView(meme));
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
+        // whichever button has been clicked (save or share) different operation is performed
         ImageSharer sharer = new ImageSharer(activity);
         if (caller.getId() == R.id.save_meme_button) {
             progress.dismiss();

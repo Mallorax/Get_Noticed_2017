@@ -20,22 +20,28 @@ public class InternalImageSaver extends AbstractImageSaver {
 
     @Override
     public Uri saveMeme(Bitmap bitmap) {
+        //generating file name
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
         String fileName = "Image-" + n + ".jpg";
 
+        //creating directories
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         File cat = new File(cw.getFilesDir(), "Memes");
         cat.mkdirs();
         File file = new File(cat, fileName);
+
+        //providing file's URI for other apps
         Uri contentUri = FileProvider.getUriForFile(getActivity(), "pl.patrykzygo.memegenerator.fileprovider", file);
         FileOutputStream out;
+
+        // saving file
         try {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
-            Log.v(IMAGE_LOG, "Saved successfuly");
+            Log.v(IMAGE_LOG, "Saved successfully");
             return contentUri;
         } catch (Exception e) {
             Log.v(IMAGE_LOG, "Something went wrong!");
