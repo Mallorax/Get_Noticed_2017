@@ -34,16 +34,15 @@ public class MemeDBHelper extends SQLiteOpenHelper {
 
     public void addMeme(Meme... memes){
         ContentValues values = new ContentValues();
-
-        for(Meme meme : memes) {
-            values.put(MemeDBEntry._ID, meme.getImageResource());
-            values.put(MemeDBEntry.COLUMN_NAME, meme.getName());
-        }
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(MemeDBEntry.TABLE_NAME, null, values);
+        for(Meme meme : memes) {
+            values.put(MemeDBEntry.COLUMN_PICTURE_ID, meme.getImageResource());
+            values.put(MemeDBEntry.COLUMN_NAME, meme.getName());
+            db.insert(MemeDBEntry.TABLE_NAME, null, values);
+        }
         db.close();
     }
-    
+
 
 
 }

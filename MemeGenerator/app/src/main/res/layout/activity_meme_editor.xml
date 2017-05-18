@@ -1,94 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativelayout"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-
-    <RelativeLayout
-        android:id="@+id/editor_meme_layout"
-        android:layout_width="252dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/meme_editor_margin">
-
-        <ImageView
-            android:id="@+id/editor_meme_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:minHeight="170dp"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/meme_top_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editor_meme_view"
-            android:layout_alignRight="@+id/editor_meme_view"
-            android:layout_alignTop="@+id/editor_meme_view"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            tools:text="Top text" />
-
-        <TextView
-            android:id="@+id/meme_bottom_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/editor_meme_view"
-            android:layout_alignLeft="@+id/editor_meme_view"
-            android:layout_alignRight="@+id/editor_meme_view"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            tools:text="Bottom text" />
-
-
-    </RelativeLayout>
-
-    <EditText
-        android:id="@+id/top_text_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/meme_editor_margin"
-        android:hint="@string/insert_top_text"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/bottom_text_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/meme_editor_margin"
-        android:hint="@string/insert_bottom_text"
-        android:inputType="text" />
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <Button
-            android:id="@+id/save_meme_button"
+
+        <RelativeLayout
+            android:id="@+id/editor_meme_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/meme_editor_padding">
+
+            <ImageView
+                android:id="@+id/editor_meme_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/winter_is_coming" />
+
+            <TextView
+                android:id="@+id/meme_top_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editor_meme_view"
+                android:layout_alignRight="@+id/editor_meme_view"
+                android:layout_alignTop="@+id/editor_meme_view"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                tools:text="Top text" />
+
+            <TextView
+                android:id="@+id/meme_bottom_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/editor_meme_view"
+                android:layout_alignLeft="@+id/editor_meme_view"
+                android:layout_alignRight="@+id/editor_meme_view"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                tools:text="Bottom text" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/top_text_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/meme_editor_margin"
-            android:layout_weight="1"
-            android:text="@string/save" />
+            android:hint="@string/insert_top_text"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/bottom_text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:hint="@string/insert_bottom_text"
+            android:inputType="text" />
+
 
         <Button
             android:id="@+id/share_meme_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/meme_editor_margin"
-            android:layout_weight="1"
             android:text="Share" />
 
+        <Button
+            android:id="@+id/save_meme_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/meme_editor_margin"
+            android:text="@string/save" />
 
     </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>
