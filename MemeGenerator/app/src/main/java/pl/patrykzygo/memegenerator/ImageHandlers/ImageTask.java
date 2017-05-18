@@ -1,6 +1,5 @@
 package pl.patrykzygo.memegenerator.ImageHandlers;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,7 +12,6 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
     private AbstractImageSaver saver;
     private Uri uri;
     private View meme, caller;
-    private Activity activity;
     private ProgressDialog progress;
 
 
@@ -21,8 +19,7 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
         this.saver = saver;
         this.meme = viewToSave;
         this.caller = caller;
-        this.activity = saver.getActivity();
-        this.progress = new ProgressDialog(activity);
+        this.progress = new ProgressDialog(saver.getActivity());
     }
 
     @Override
@@ -47,7 +44,7 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         // whichever button has been clicked (save or share) different operation is performed
-        ImageSharer sharer = new ImageSharer(activity);
+        ImageSharer sharer = new ImageSharer(saver.getActivity());
         if (caller.getId() == R.id.save_meme_button) {
             progress.dismiss();
             sharer.sendToGallery(uri, saver);
