@@ -3,17 +3,19 @@ package pl.patrykzygo.memegenerator.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import pl.patrykzygo.memegenerator.Meme;
 
 import static pl.patrykzygo.memegenerator.Database.MemeDBContract.MemeDBEntry;
 
 
 public class MemeDBHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Memes.db";
+    // Database Version
+    private static final int DATABASE_VERSION = 1;
+
+    // Database Name
+    private static final String DATABASE_NAME = "Memes.db";
 
 
 
@@ -23,26 +25,27 @@ public class MemeDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(MemeDBEntry.CREATE_ENTRIES);
+        // creating table
+        db.execSQL(MemeDBEntry.CREATE_TABLE_IMAGE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(MemeDBEntry.SQL_DELETE_TABLE);
+        // on upgrade drop older tables
+        db.execSQL("DROP TABLE IF EXISTS " + MemeDBEntry.DB_TABLE);
+
+        // create new table
         onCreate(db);
     }
 
-    public void addMeme(Meme... memes){
-        ContentValues values = new ContentValues();
-        SQLiteDatabase db = getWritableDatabase();
-        for(Meme meme : memes) {
-            values.put(MemeDBEntry.COLUMN_PICTURE_ID, meme.getImageResource());
-            values.put(MemeDBEntry.COLUMN_NAME, meme.getName());
-            db.insert(MemeDBEntry.TABLE_NAME, null, values);
-        }
-        db.close();
+    public void addEntry( String name, byte[] image) throws SQLiteException {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new  ContentValues();
+        cv.put(MemeDBEntry.KEY_NAME, name);
+        cv.put(MemeDBEntry.KEY_IMAGE, image);
+        database.insert(MemeDBEntry.DB_TABLE, null, cv );
     }
-
-
-
 }
+
+
+
