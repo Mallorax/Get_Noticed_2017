@@ -7,8 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.List;
-
 import pl.patrykzygo.memegenerator.Database.DefaultMemes;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         memeListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        memeListAdapter = new MemeListAdapter(getMemeList());
+        memeListAdapter = new MemeListAdapter(DefaultMemes.getDefaultMemes());
         memeListAdapter.setOnEntryClickListener(new MemeListAdapter.OnEntryClickListener(){
             @Override
             public void onEntryClick(View view, Meme memeClicked) {
@@ -37,12 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         memeListRecyclerView.setAdapter(memeListAdapter);
-
     }
 
-    //temporary method that provides place holders to display our list
-    private List<Meme> getMemeList(){
-        List<Meme> list = DefaultMemes.DEFAULT_MEMES;
-        return list;
-    }
+
 }

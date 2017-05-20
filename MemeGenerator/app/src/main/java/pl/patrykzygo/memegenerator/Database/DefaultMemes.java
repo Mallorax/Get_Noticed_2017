@@ -7,11 +7,9 @@ import java.util.List;
 import pl.patrykzygo.memegenerator.Meme;
 import pl.patrykzygo.memegenerator.R;
 
-public class DefaultMemes {
+public abstract class DefaultMemes {
 
-    public static final List<Meme> DEFAULT_MEMES = getDefaultMemes();
-
-    private static List<Meme> getDefaultMemes(){
+    public static List<Meme> getDefaultMemes(){
         List<Meme> memes = new ArrayList<>();
         memes.add(new Meme("Awkward seal", R.drawable.awkward_seal));
         memes.add(new Meme("Butthurt dweller", R.drawable.butthurt_dweller));

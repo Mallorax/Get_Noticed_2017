@@ -5,20 +5,23 @@ import android.provider.BaseColumns;
 
 public final class MemeDBContract {
 
+    static final int DATABASE_VERSION = 1;
+    static final String DATABASE_NAME = "Memes.db";
+
     private MemeDBContract(){}
 
-    public static class MemeDBEntry implements BaseColumns{
+    public abstract static class UsersMemesTable implements BaseColumns{
 
         // Table Names
-        protected static final String DB_TABLE = "table_image";
-
+        public static final String MEMES_TABLE = "table_image";
         // column names
-        protected static final String KEY_NAME = "image_name";
-        protected static final String KEY_IMAGE = "image_data";
+        public static final String MEME_NAME = "image_name";
+        public static final String MEME_DATA = "image_data";
 
         // Table create statement
-        protected static final String CREATE_TABLE_IMAGE = "CREATE TABLE " + DB_TABLE + "("+
-                KEY_NAME + " TEXT," +
-                KEY_IMAGE + " BLOB);";
+        public static final String CREATE_MEMES_TABLE = "CREATE TABLE " + MEMES_TABLE + "("+
+                MEME_NAME + " TEXT," +
+                MEME_DATA + " BLOB);";
     }
+
 }

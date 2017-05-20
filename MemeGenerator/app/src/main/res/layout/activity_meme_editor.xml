@@ -18,7 +18,7 @@
             android:id="@+id/editor_meme_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/meme_editor_padding">
+            android:layout_margin="@dimen/meme_editor_padding">
 
             <ImageView
                 android:id="@+id/editor_meme_view"

@@ -8,6 +8,7 @@
     android:clickable="true"
     android:focusable="true"
     android:minHeight="88dp"
+
     android:orientation="horizontal">
 
     <ImageView
