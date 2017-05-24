@@ -30,7 +30,7 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".ImageHandlers.AddMemeActivity"></activity>
+        <activity android:name=".AddMemeActivity"></activity>
     </application>
 
 </manifest>
