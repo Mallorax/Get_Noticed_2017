@@ -3,7 +3,7 @@
     <string name="insert_top_text">Insert top text</string>
     <string name="insert_bottom_text">Insert bottom text</string>
     <string name="save">Save</string>
-    <string name="text_add_upperscape">ADD</string>
+    <string name="text_add_uppercase">ADD</string>
     <string name="from_gallery">From gallery...</string>
     <string name="from_camera">From camera...</string>
 </resources>

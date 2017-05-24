@@ -1,8 +1,9 @@
 package pl.patrykzygo.memegenerator;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,13 +12,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
+import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
+import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 import pl.patrykzygo.memegenerator.Database.DefaultMemes;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActivityManagePermission {
 
     private RecyclerView memeListRecyclerView;
     private MemeListAdapter memeListAdapter;
     private Toolbar myToolbar;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
     @Override
@@ -70,6 +75,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fromCamera(){
-        Toast.makeText(this, "Chosen camera option", Toast.LENGTH_LONG).show();
+        askCompactPermission(PermissionUtils.Manifest_CAMERA, new PermissionResult() {
+            @Override
+            public void permissionGranted() {
+
+            }
+
+            @Override
+            public void permissionDenied() {
+
+            }
+
+            @Override
+            public void permissionForeverDenied() {
+
+            }
+        });
+    }
+
+    public void cameraRequestGranted(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+        }
     }
 }
