@@ -6,6 +6,6 @@
     <dimen name="meme_editor_padding">8dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="list_item_padding">16dp</dimen>
-    <dimen name="list_item_minHight">88dp</dimen>
+    <dimen name="list_item_minHeight">88dp</dimen>
     <dimen name="list_icon_width">88dp</dimen>
 </resources>

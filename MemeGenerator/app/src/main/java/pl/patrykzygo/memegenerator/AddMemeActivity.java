@@ -2,6 +2,7 @@ package pl.patrykzygo.memegenerator;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,12 +27,8 @@ public class AddMemeActivity extends AppCompatActivity {
         nameInput = (EditText) findViewById(R.id.name_input);
 
         Intent i = getIntent();
-        Bundle b = i.getExtras();
-
-        if (b != null){
-            Bitmap bitmap = (Bitmap) b.get("data");
-            memeToAdd.setImageBitmap(bitmap);
-        }
+        String path = i.getStringExtra("path");
+        memeToAdd.setImageBitmap(setPic(path));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +36,19 @@ public class AddMemeActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_LONG).show();
             }
         });
+    }
 
+    private Bitmap setPic(String path){
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, bmOptions);
 
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = 5;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
+        return bitmap;
     }
 }

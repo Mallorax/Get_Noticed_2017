@@ -3,7 +3,6 @@ package pl.patrykzygo.memegenerator.ImageHandlers;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Random;
 
 public class ExternalImageSaver extends AbstractImageSaver {
 
@@ -21,17 +19,12 @@ public class ExternalImageSaver extends AbstractImageSaver {
 
     @Override
     public Uri saveMeme(Bitmap bitmap) {
-        //generate file name and get root directory
         String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fileName = "Image-" + n + ".jpg";
 
         //create directories
         File myDir = new File(root + "/Memes");
         myDir.mkdirs();
-        File file = new File(myDir, fileName);
+        File file = new File(myDir, getFileName());
         Uri contentUri = Uri.fromFile(file);
 
         FileOutputStream out;
@@ -40,7 +33,8 @@ public class ExternalImageSaver extends AbstractImageSaver {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
-            scanGallery(file);
+            bitmap.recycle();
+            galleryAddPic(contentUri);
             Log.v(IMAGE_LOG, "Image saved to external storage");
             return contentUri;
         } catch (IOException e) {
@@ -50,14 +44,4 @@ public class ExternalImageSaver extends AbstractImageSaver {
         }
     }
 
-    private void scanGallery(File file) {
-        MediaScannerConnection.scanFile(getActivity(), new String[]{file.toString()}, null,
-                new MediaScannerConnection.OnScanCompletedListener() {
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i(IMAGE_LOG, "Scanned " + path + ":");
-                        Log.i(IMAGE_LOG, "-> uri=" + uri);
-                    }
-                });
-        Log.v(IMAGE_LOG, "Gallery scanned");
-    }
 }

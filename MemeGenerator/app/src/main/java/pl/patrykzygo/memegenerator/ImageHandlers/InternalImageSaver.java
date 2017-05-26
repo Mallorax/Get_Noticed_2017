@@ -10,7 +10,6 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Random;
 
 public class InternalImageSaver extends AbstractImageSaver {
 
@@ -20,17 +19,11 @@ public class InternalImageSaver extends AbstractImageSaver {
 
     @Override
     public Uri saveMeme(Bitmap bitmap) {
-        //generating file name
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fileName = "Image-" + n + ".jpg";
-
         //creating directories
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         File cat = new File(cw.getFilesDir(), "Memes");
         cat.mkdirs();
-        File file = new File(cat, fileName);
+        File file = new File(cat, getFileName());
 
         //providing file's URI for other apps
         Uri contentUri = FileProvider.getUriForFile(getActivity(), "pl.patrykzygo.memegenerator.fileprovider", file);
@@ -41,7 +34,9 @@ public class InternalImageSaver extends AbstractImageSaver {
             out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
+            bitmap.recycle();
             Log.v(IMAGE_LOG, "Saved successfully");
+            galleryAddPic(contentUri);
             return contentUri;
         } catch (Exception e) {
             Log.v(IMAGE_LOG, "Something went wrong!");

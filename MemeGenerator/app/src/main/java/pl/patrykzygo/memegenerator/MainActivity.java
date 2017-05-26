@@ -1,8 +1,11 @@
 package pl.patrykzygo.memegenerator;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 import pl.patrykzygo.memegenerator.Database.DefaultMemes;
+import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
 
 public class MainActivity extends ActivityManagePermission {
 
@@ -22,6 +29,7 @@ public class MainActivity extends ActivityManagePermission {
     private MemeListAdapter memeListAdapter;
     private Toolbar myToolbar;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String filePath;
 
 
     @Override
@@ -94,8 +102,24 @@ public class MainActivity extends ActivityManagePermission {
 
     public void cameraRequestGranted(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "pl.patrykzygo.memegenerator.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                filePath = photoFile.getAbsolutePath();
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
         }
 
     }
@@ -103,9 +127,24 @@ public class MainActivity extends ActivityManagePermission {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Intent intent = new Intent(this, AddMemeActivity.class);
-            intent.putExtras(data.getExtras());
-            startActivity(intent);
+            Intent i = new Intent(this, AddMemeActivity.class);
+            i.putExtra("path", filePath);
+            startActivity(i);
         }
     }
+
+
+    private File createImageFile() throws IOException {
+        ContextWrapper cw = new ContextWrapper(this);
+        File storageDir = new File(cw.getFilesDir(),"Pics");
+        storageDir.mkdirs();
+        File image = File.createTempFile(
+                AbstractImageSaver.getFileName(),  /* prefix */
+                null,         /* suffix */
+                storageDir      /* directory */
+        );
+        return image;
+    }
+
+
 }

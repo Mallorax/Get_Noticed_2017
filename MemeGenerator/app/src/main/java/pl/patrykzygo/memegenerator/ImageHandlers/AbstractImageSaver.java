@@ -2,11 +2,14 @@ package pl.patrykzygo.memegenerator.ImageHandlers;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+
+import java.util.Random;
 
 public abstract class AbstractImageSaver {
 
@@ -29,6 +32,21 @@ public abstract class AbstractImageSaver {
 
     //Method for saving meme. Should return meme's Uri or null if wasn't saved successfully
     public abstract Uri saveMeme(Bitmap bitmap);
+
+    protected void galleryAddPic(Uri uri) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        mediaScanIntent.setData(uri);
+        getActivity().sendBroadcast(mediaScanIntent);
+    }
+
+    public static String getFileName(){
+        //generate file name and get root directory
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fileName = "Image-" + n + ".jpg";
+        return fileName;
+    }
 
 
     public Activity getActivity() {
