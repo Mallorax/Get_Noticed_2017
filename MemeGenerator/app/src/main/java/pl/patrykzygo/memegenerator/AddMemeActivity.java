@@ -1,8 +1,6 @@
 package pl.patrykzygo.memegenerator;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
 
 public class AddMemeActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class AddMemeActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         String path = i.getStringExtra("path");
-        memeToAdd.setImageBitmap(setPic(path));
+        memeToAdd.setImageBitmap(ImageConverter.setPic(path));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,17 +38,5 @@ public class AddMemeActivity extends AppCompatActivity {
         });
     }
 
-    private Bitmap setPic(String path){
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, bmOptions);
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = 5;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
-        return bitmap;
-    }
 }
