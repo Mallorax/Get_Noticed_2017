@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 public class ImageConverter {
 
-    public static Bitmap setPic(String path){
+    public static Bitmap downscalePic(String path){
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, bmOptions);

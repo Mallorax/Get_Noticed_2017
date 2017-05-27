@@ -28,7 +28,7 @@ public class AddMemeActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         String path = i.getStringExtra("path");
-        memeToAdd.setImageBitmap(ImageConverter.setPic(path));
+        memeToAdd.setImageBitmap(ImageConverter.downscalePic(path));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

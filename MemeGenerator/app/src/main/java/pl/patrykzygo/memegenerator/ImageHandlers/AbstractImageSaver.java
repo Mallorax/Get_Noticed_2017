@@ -30,6 +30,14 @@ public abstract class AbstractImageSaver {
         return bitmap;
     }
 
+    public static String getFileName(){
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fileName = "Image-" + n + ".jpg";
+        return fileName;
+    }
+
     //Method for saving meme. Should return meme's Uri or null if wasn't saved successfully
     public abstract Uri saveMeme(Bitmap bitmap);
 
@@ -38,16 +46,6 @@ public abstract class AbstractImageSaver {
         mediaScanIntent.setData(uri);
         getActivity().sendBroadcast(mediaScanIntent);
     }
-
-    public static String getFileName(){
-        //generate file name and get root directory
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fileName = "Image-" + n + ".jpg";
-        return fileName;
-    }
-
 
     public Activity getActivity() {
         return activity;

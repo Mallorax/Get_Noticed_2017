@@ -81,7 +81,7 @@ public class MainActivity extends ActivityManagePermission {
         Toast.makeText(this, "Chosen gallery option", Toast.LENGTH_LONG).show();
     }
 
-    public void fromCamera(){
+    private void fromCamera(){
         askCompactPermission(PermissionUtils.Manifest_CAMERA, new PermissionResult() {
             @Override
             public void permissionGranted() {
@@ -100,7 +100,7 @@ public class MainActivity extends ActivityManagePermission {
         });
     }
 
-    public void cameraRequestGranted(){
+    private void cameraRequestGranted(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -138,11 +138,7 @@ public class MainActivity extends ActivityManagePermission {
         ContextWrapper cw = new ContextWrapper(this);
         File storageDir = new File(cw.getFilesDir(),"Pics");
         storageDir.mkdirs();
-        File image = File.createTempFile(
-                AbstractImageSaver.getFileName(),  /* prefix */
-                null,         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = File.createTempFile(AbstractImageSaver.getFileName(), null, storageDir);
         return image;
     }
 
