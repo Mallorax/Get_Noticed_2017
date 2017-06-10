@@ -1,6 +1,7 @@
 package pl.patrykzygo.memegenerator;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
 import pl.patrykzygo.memegenerator.ImageHandlers.ImageTask;
 import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageSaver;
 
@@ -43,10 +45,15 @@ public class MemeEditorActivity extends ActivityManagePermission {
 
 
         Intent i = getIntent();
-        Bundle b = i.getExtras();
-        if (b != null) {
-            int imageID = b.getInt("image");
-            memeImage.setImageResource(imageID);
+        if (i != null) {
+            if (i.getIntExtra("image", -1) != -1) {
+                int imageID = i.getIntExtra("image", -1);
+                memeImage.setImageResource(imageID);
+            }else{
+                byte[] bitmapInBytes = i.getByteArrayExtra("bitmap");
+                Bitmap bitmap = ImageConverter.getImage(bitmapInBytes);
+                memeImage.setImageBitmap(bitmap);
+            }
 
             topEditText.addTextChangedListener(new TextWatcher() {
                 @Override

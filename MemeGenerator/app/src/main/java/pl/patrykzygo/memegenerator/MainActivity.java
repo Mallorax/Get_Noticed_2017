@@ -16,12 +16,17 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import permission.auron.com.marshmallowpermissionhelper.ActivityManagePermission;
 import permission.auron.com.marshmallowpermissionhelper.PermissionResult;
 import permission.auron.com.marshmallowpermissionhelper.PermissionUtils;
 import pl.patrykzygo.memegenerator.Database.DefaultMemes;
+import pl.patrykzygo.memegenerator.Database.MemeDBHelper;
 import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
+import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
+import pl.patrykzygo.memegenerator.Model.Meme;
+import pl.patrykzygo.memegenerator.Model.UsersMeme;
 
 public class MainActivity extends ActivityManagePermission {
 
@@ -45,16 +50,27 @@ public class MainActivity extends ActivityManagePermission {
 
         memeListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        memeListAdapter = new MemeListAdapter(DefaultMemes.getDefaultMemes());
+        memeListAdapter = new MemeListAdapter(getMemes());
         memeListAdapter.setOnEntryClickListener(new MemeListAdapter.OnEntryClickListener(){
             @Override
             public void onEntryClick(View view, Meme memeClicked) {
                 Intent i = new Intent(view.getContext(), MemeEditorActivity.class);
-                i.putExtra("image", memeClicked.getImageResource());
-                startActivity(i);
+                if (memeClicked instanceof UsersMeme) {
+                    i.putExtra("bitmap", ImageConverter.getBytes(((UsersMeme)memeClicked).getBitmap()));
+                    startActivity(i);
+                }else{
+                    i.putExtra("image", memeClicked.getImageResource());
+                    startActivity(i);
+                }
             }
         });
         memeListRecyclerView.setAdapter(memeListAdapter);
+    }
+
+    private List<Meme> getMemes() {
+        List <Meme> memes = DefaultMemes.getDefaultMemes();
+        memes.addAll(new MemeDBHelper(this).getMemesFromDatabase());
+        return memes;
     }
 
     @Override

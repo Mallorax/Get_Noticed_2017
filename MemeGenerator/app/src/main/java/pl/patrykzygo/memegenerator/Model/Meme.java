@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator;
+package pl.patrykzygo.memegenerator.Model;
 
 public class Meme {
 

@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import pl.patrykzygo.memegenerator.Model.Meme;
+import pl.patrykzygo.memegenerator.Model.UsersMeme;
+
 
 public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHolder> {
 
@@ -36,7 +39,11 @@ public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHo
     public void onBindViewHolder(MemeHolder holder, int position) {
         Meme meme = memeList.get(position);
         holder.memeNameTextView.setText(meme.getName());
-        holder.memeImageView.setImageResource(meme.getImageResource());
+        if(meme instanceof UsersMeme) {
+            holder.memeImageView.setImageBitmap(((UsersMeme) meme).getBitmap());
+        }else {
+            holder.memeImageView.setImageResource(meme.getImageResource());
+        }
     }
 
     @Override

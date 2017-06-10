@@ -1,6 +1,7 @@
 package pl.patrykzygo.memegenerator;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import pl.patrykzygo.memegenerator.Database.MemeDBHelper;
+import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
 import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
 
 public class AddMemeActivity extends AppCompatActivity {
@@ -33,9 +36,17 @@ public class AddMemeActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_LONG).show();
+                saveButtonClicked();
             }
         });
+    }
+
+    public void saveButtonClicked(){
+        Bitmap usersMeme = AbstractImageSaver.getBitmapFromView(memeToAdd);
+        byte[] memeInBytes = ImageConverter.getBytes(usersMeme);
+        String name = nameInput.getText().toString();
+        new MemeDBHelper(this).addEntry(name, memeInBytes);
+        Toast.makeText(this, "New meme addade", Toast.LENGTH_LONG).show();
     }
 
 

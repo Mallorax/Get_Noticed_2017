@@ -4,7 +4,7 @@ package pl.patrykzygo.memegenerator.Database;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.patrykzygo.memegenerator.Meme;
+import pl.patrykzygo.memegenerator.Model.Meme;
 import pl.patrykzygo.memegenerator.R;
 
 public abstract class DefaultMemes {

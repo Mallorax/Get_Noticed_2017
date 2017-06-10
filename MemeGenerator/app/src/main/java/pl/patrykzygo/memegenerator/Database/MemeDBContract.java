@@ -5,8 +5,9 @@ import android.provider.BaseColumns;
 
 public final class MemeDBContract {
 
-    static final int DATABASE_VERSION = 1;
-    static final String DATABASE_NAME = "Memes.db";
+    protected static final int DATABASE_VERSION = 2;
+    protected static final String DATABASE_NAME = "Memes.db";
+    protected static final String DATABASE_LOG = "DATABASE";
 
     private MemeDBContract(){}
 
