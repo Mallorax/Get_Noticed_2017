@@ -49,8 +49,8 @@ public class ImageTask extends AsyncTask<Void, Void, Void> {
             progress.dismiss();
             sharer.sendToGallery(uri, saver);
         }else {
-            sharer.shareWithOtherApps(uri);
             progress.dismiss();
+            sharer.shareWithOtherApps(uri);
         }
     }
 }

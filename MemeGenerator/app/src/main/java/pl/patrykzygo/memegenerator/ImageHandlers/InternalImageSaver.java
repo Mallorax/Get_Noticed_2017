@@ -25,17 +25,16 @@ public class InternalImageSaver extends AbstractImageSaver {
         cat.mkdirs();
         File file = new File(cat, getFileName());
 
-        //providing file's URI for other apps
-        Uri contentUri = FileProvider.getUriForFile(getActivity(), "pl.patrykzygo.memegenerator.fileprovider", file);
-        FileOutputStream out;
+        Log.v(IMAGE_LOG, "new file " + file.exists());
 
         // saving file
         try {
-            out = new FileOutputStream(file);
+            FileOutputStream out = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();
             bitmap.recycle();
             Log.v(IMAGE_LOG, "Saved successfully");
+            Uri contentUri = FileProvider.getUriForFile(getActivity(), "pl.patrykzygo.memegenerator.fileprovider", file);
             galleryAddPic(contentUri);
             return contentUri;
         } catch (Exception e) {

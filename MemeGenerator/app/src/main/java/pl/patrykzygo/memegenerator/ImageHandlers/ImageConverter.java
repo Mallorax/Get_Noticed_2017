@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 public class ImageConverter {
 
@@ -19,6 +20,18 @@ public class ImageConverter {
         Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
         return bitmap;
     }
+
+    public static Bitmap downscalePic(InputStream stream){
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = 2;
+
+        Bitmap bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
+        return bitmap;
+    }
+
+
 
     public static byte[] getBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

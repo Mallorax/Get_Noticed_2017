@@ -30,8 +30,11 @@ public class AddMemeActivity extends AppCompatActivity {
         nameInput = (EditText) findViewById(R.id.name_input);
 
         Intent i = getIntent();
-        String path = i.getStringExtra("path");
-        memeToAdd.setImageBitmap(ImageConverter.downscalePic(path));
+        if (i.getStringExtra("path") != null) {
+            memeToAdd.setImageBitmap(ImageConverter.downscalePic(i.getStringExtra("path")));
+        }else if (i.getByteArrayExtra("image") != null){
+            memeToAdd.setImageBitmap(ImageConverter.getImage(i.getByteArrayExtra("image")));
+        }
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +49,7 @@ public class AddMemeActivity extends AppCompatActivity {
         byte[] memeInBytes = ImageConverter.getBytes(usersMeme);
         String name = nameInput.getText().toString();
         new MemeDBHelper(this).addEntry(name, memeInBytes);
-        Toast.makeText(this, "New meme addade", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "New meme added", Toast.LENGTH_LONG).show();
     }
 
 
