@@ -51,14 +51,15 @@ public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHo
         return memeList.size();
     }
 
-    //interface with a method that class must implement if it wants to define action that occur when list item is clicked
+    //interface with a methods that class must implement if it wants to define action that occur when list item is clicked
     public interface OnEntryClickListener {
         void onEntryClick(View view, Meme memeClicked);
+        void onEntryLongClick(View view, Meme memeClicked);
     }
 
     //ViewHolder class that provides a references to the views
     //It implements OnClickListener, so RecyclerView will not only be able to display list
-    public class MemeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MemeHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView memeNameTextView;
         private ImageView memeImageView;
@@ -67,6 +68,7 @@ public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHo
         public MemeHolder(View view) {
             super(view);
             view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
             memeNameTextView = (TextView) view.findViewById(R.id.meme_text_view);
             memeImageView = (ImageView) view.findViewById(R.id.meme_list_image);
         }
@@ -77,6 +79,15 @@ public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHo
             if (onEntryClickListener != null) {
                 onEntryClickListener.onEntryClick(v, memeList.get(getLayoutPosition()));
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (onEntryClickListener != null) {
+                onEntryClickListener.onEntryLongClick(v, memeList.get(getLayoutPosition()));
+                return true;
+            }
+            return true;
         }
     }
 }

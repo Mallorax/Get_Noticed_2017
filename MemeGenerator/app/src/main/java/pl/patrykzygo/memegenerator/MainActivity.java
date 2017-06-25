@@ -54,14 +54,16 @@ public class MainActivity extends ActivityManagePermission implements MemeListAd
 
         memeListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        memeListAdapter = new MemeListAdapter(getMemes());
-        memeListAdapter.setOnEntryClickListener(this);
-        memeListRecyclerView.setAdapter(memeListAdapter);
+        loadMemeList();
     }
 
     @Override
     public void onResume(){
         super.onResume();
+        loadMemeList();
+    }
+
+    private void loadMemeList(){
         memeListAdapter = new MemeListAdapter(getMemes());
         memeListAdapter.setOnEntryClickListener(this);
         memeListRecyclerView.setAdapter(memeListAdapter);
@@ -202,6 +204,19 @@ public class MainActivity extends ActivityManagePermission implements MemeListAd
         }else{
             i.putExtra("image", memeClicked.getImageResource());
             startActivity(i);
+        }
+    }
+
+    @Override
+    public void onEntryLongClick(View view, Meme memeClicked) {
+        if (memeClicked instanceof UsersMeme){
+            Boolean isSuccessful = new MemeDBHelper(this).deleteEntry((UsersMeme) memeClicked);
+            if (isSuccessful){
+                loadMemeList();
+                Toast.makeText(this, "Successfully deleted", Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
