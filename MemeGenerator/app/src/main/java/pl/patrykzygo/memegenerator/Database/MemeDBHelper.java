@@ -60,7 +60,6 @@ public class MemeDBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do {
                 UsersMeme meme = new UsersMeme(cursor.getString(0), ImageConverter.getImage(cursor.getBlob(1)));
-                System.out.println(meme.getName());
                 memes.add(meme);
             }while(cursor.moveToNext());
         }

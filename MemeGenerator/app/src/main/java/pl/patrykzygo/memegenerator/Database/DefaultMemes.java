@@ -14,7 +14,7 @@ public abstract class DefaultMemes {
         memes.add(new Meme("Awkward seal", R.drawable.awkward_seal));
         memes.add(new Meme("Butthurt dweller", R.drawable.butthurt_dweller));
         memes.add(new Meme("Confession bear", R.drawable.confession_bear));
-        memes.add(new Meme("Grumphy cat", R.drawable.grumphy_cat));
+        memes.add(new Meme("Grumpy cat", R.drawable.grumphy_cat));
         memes.add(new Meme("Joker mind loss", R.drawable.joker_mind_loss));
         memes.add(new Meme("Lazy college senior", R.drawable.lazy_college_senior));
         memes.add(new Meme("Not sure if", R.drawable.not_sure_if_troll));

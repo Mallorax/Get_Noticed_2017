@@ -37,6 +37,14 @@ public abstract class AbstractImageSaver {
         String fileName = "Image-" + n + ".jpg";
         return fileName;
     }
+    public static String getFileNameWithoutSuffix(){
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        String fileName = "Image-" + n;
+        return fileName;
+    }
+
 
     //Method for saving meme. Should return meme's Uri or null if wasn't saved successfully
     public abstract Uri saveMeme(Bitmap bitmap);
