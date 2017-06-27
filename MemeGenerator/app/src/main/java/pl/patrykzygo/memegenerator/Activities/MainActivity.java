@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator;
+package pl.patrykzygo.memegenerator.Activities;
 
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -30,6 +30,7 @@ import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
 import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
 import pl.patrykzygo.memegenerator.Model.Meme;
 import pl.patrykzygo.memegenerator.Model.UsersMeme;
+import pl.patrykzygo.memegenerator.R;
 
 public class MainActivity extends ActivityManagePermission implements MemeListAdapter.OnEntryClickListener{
 

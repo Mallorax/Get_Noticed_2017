@@ -38,6 +38,7 @@
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 tools:text="Top text" />
 
             <TextView
@@ -50,6 +51,7 @@
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 tools:text="Bottom text" />
 
 

@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator;
+package pl.patrykzygo.memegenerator.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import pl.patrykzygo.memegenerator.Database.MemeDBHelper;
 import pl.patrykzygo.memegenerator.ImageHandlers.AbstractImageSaver;
 import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
+import pl.patrykzygo.memegenerator.R;
 
 public class AddMemeActivity extends AppCompatActivity {
 

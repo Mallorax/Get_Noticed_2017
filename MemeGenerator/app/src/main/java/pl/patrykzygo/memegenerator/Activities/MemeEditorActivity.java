@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator;
+package pl.patrykzygo.memegenerator.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +20,7 @@ import pl.patrykzygo.memegenerator.ImageHandlers.ExternalImageSaver;
 import pl.patrykzygo.memegenerator.ImageHandlers.ImageConverter;
 import pl.patrykzygo.memegenerator.ImageHandlers.ImageTask;
 import pl.patrykzygo.memegenerator.ImageHandlers.InternalImageSaver;
+import pl.patrykzygo.memegenerator.R;
 
 public class MemeEditorActivity extends ActivityManagePermission {
 

@@ -25,7 +25,6 @@ public class ImageConverter {
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 
         bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = 2;
 
         Bitmap bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
         return bitmap;

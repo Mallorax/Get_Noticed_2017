@@ -1,4 +1,4 @@
-package pl.patrykzygo.memegenerator;
+package pl.patrykzygo.memegenerator.Activities;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +12,7 @@ import java.util.List;
 
 import pl.patrykzygo.memegenerator.Model.Meme;
 import pl.patrykzygo.memegenerator.Model.UsersMeme;
+import pl.patrykzygo.memegenerator.R;
 
 
 public class MemeListAdapter extends RecyclerView.Adapter<MemeListAdapter.MemeHolder> {

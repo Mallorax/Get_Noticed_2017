@@ -9,16 +9,16 @@
 
     <include
         android:id="@+id/add_toolbar"
-        layout="@layout/toolbar_layout"/>
+        layout="@layout/toolbar_layout" />
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/meme_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:elevation="4dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
+        android:elevation="4dp"
+        android:scrollbars="vertical"
         tools:listitem="@android:layout/simple_list_item_1" />
 
 </LinearLayout>
