@@ -49,6 +49,7 @@ public class MainActivity extends ActivityManagePermission implements MemeListAd
         setSupportActionBar(myToolbar);
 
         memeListRecyclerView = (RecyclerView) findViewById(R.id.meme_list_recycler);
+        memeListRecyclerView.addItemDecoration(new LineDivider(this));
         memeListRecyclerView.setHasFixedSize(true);
 
         memeListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
