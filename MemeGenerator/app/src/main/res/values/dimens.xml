@@ -8,4 +8,5 @@
     <dimen name="list_item_padding">16dp</dimen>
     <dimen name="list_item_minHeight">88dp</dimen>
     <dimen name="list_icon_width">88dp</dimen>
+    <dimen name="add_meme_padding">16dp</dimen>
 </resources>
